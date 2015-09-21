@@ -14,3 +14,5 @@ Also the script works maya files that have name spaces in the light objects and 
 3.  Select which of the attributes you want to copy and hit enter.
 
 4.  Open up the text file, to copy/paste the mel into mel script editor. 
+
+5. Test
