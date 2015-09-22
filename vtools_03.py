@@ -204,9 +204,9 @@ def main():
         if action == '1':
             ColorForAllSelectedLights(allSelLights)
         elif action == '2':
-    	    CoordinatesForAllSelectedLight(allSelLights, path)
+    	    CoordinatesForAllSelectedLight(allSelLights, "path")
         elif action == '3':
-    	    IntensityCurvesForSelectedLights(allSelLights, path)
+    	    IntensityCurvesForSelectedLights(allSelLights, "path")
         elif action == '4':
     	    exit()
         else:
