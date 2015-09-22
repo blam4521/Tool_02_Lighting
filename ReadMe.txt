@@ -7,7 +7,7 @@ it back into the database
 Also the script works maya files that have name spaces in the light objects and removes them 
 
 
-1.  First create directory on the c drive with the name C:\LIGHTING folder for all the text files to go
+1.  First create directory on the c drive with the name C:\LIGHTING folder for all the text files to go to
 
 2.  Then select the lights whose attributes you want to copy into a text, name the file.
 
@@ -15,4 +15,3 @@ Also the script works maya files that have name spaces in the light objects and 
 
 4.  Open up the text file, to copy/paste the mel into mel script editor. 
 
-5. Test
