@@ -203,10 +203,10 @@ def main():
     allSelLights = cmds.ls(sl=True)
     
     today = str(date.today()) + "_T" + str(time.strftime("%H-%M-%S"))
-	print today
-	
-	path = r"C://LIGHTING//" + input + "_" + today+ ".mel"
-	if os.path.isfile(path):
+    print today
+    
+    path = r"C://LIGHTING//" + input + "_" + today+ ".mel"
+    if os.path.isfile(path):
 		print path
 
     if len(allSelLights) >= 1:

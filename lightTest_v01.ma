@@ -1,6 +1,6 @@
 //Maya ASCII 2014 scene
 //Name: lightTest_v01.ma
-//Last modified: Wed, Sep 23, 2015 11:05:19 PM
+//Last modified: Thu, Sep 24, 2015 12:12:45 AM
 //Codeset: 1252
 requires maya "2014";
 currentUnit -l centimeter -a degree -t film;
@@ -11,12 +11,12 @@ fileInfo "cutIdentifier" "201303010241-864206";
 fileInfo "osv" "Microsoft Windows 7 Ultimate Edition, 64-bit Windows 7 Service Pack 1 (Build 7601)\n";
 createNode transform -s -n "persp";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" 48.902250328369313 21.539219578736681 -23.849314139277297 ;
-	setAttr ".r" -type "double3" -22.12068761001893 115.79999999999875 0 ;
+	setAttr ".t" -type "double3" 55.235766923677062 31.808000217152948 -25.834348461083682 ;
+	setAttr ".r" -type "double3" -27.520687610018697 106.59999999999798 0 ;
 createNode camera -s -n "perspShape" -p "persp";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999993;
-	setAttr ".coi" 59.655499788534378;
+	setAttr ".coi" 70.66555521327335;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
