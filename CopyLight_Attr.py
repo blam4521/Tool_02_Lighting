@@ -7,7 +7,9 @@ import time
 from datetime import date
 
 def ColorForAllSelectedLights(allSelLights):
-	
+	'''
+	copies colors if the color slot has a ramp
+	'''
 	colorList = []
 	pointList = []
 	platformRamps = []
@@ -50,7 +52,9 @@ def ColorForAllSelectedLights(allSelLights):
 
 
 def CoordinatesForAllSelectedLight(allSelLights, path):
-    
+	'''
+	Grabs and copies Coordinates and attributes from the light shape and transform node
+    '''
 	#allSelLights = cmds.ls(sl=True, type='transform')
 	findRamps = cmds.ls(sl=True, typ = 'ramp')
 	areaLightTrans= []
@@ -133,6 +137,11 @@ def CoordinatesForAllSelectedLight(allSelLights, path):
 
 def IntensityCurvesForSelectedLights(allSelLights, path):    
     #allSelLights = cmds.ls(sl=True)
+    '''
+    Findes and copies the intensity curves of the spotLight
+    '''
+
+
     keytimes = []     
     file = open(path, 'wb')
     mayaLine = 	'//Light Values for Episode:\t%s'%(input)
@@ -187,9 +196,19 @@ def IntensityCurvesForSelectedLights(allSelLights, path):
                      
 
 def main():
-    
+    '''
+    Gives options after the user enters the name of the light, temporary UI
+    '''
+
     allSelLights = cmds.ls(sl=True)
     
+    today = str(date.today()) + "_T" + str(time.strftime("%H-%M-%S"))
+	print today
+	
+	path = r"C://LIGHTING//" + input + "_" + today+ ".mel"
+	if os.path.isfile(path):
+		print path
+
     if len(allSelLights) >= 1:
         print("""
                 LightRig Options
@@ -214,6 +233,11 @@ def main():
     else:
         cmds.promptDialog(title = "No Light Selected", message = "Must select at least one light")	    
 
+
+
+##--------------------------------------------------------------------------
+#Temporary UI 
+
 dialog = cmds.promptDialog(title = "Episode Number|Light Rig", 
 		message = "Enter Name:", button = ["OK", "Cancel"], 
 		defaultButton = "OK", cancelButton="Cancel", dismissString = "Cancel")
@@ -226,9 +250,3 @@ else:
     dialog == "Cancel"
     exit()
 
-today = str(date.today()) + "_T" + str(time.strftime("%H-%M-%S"))
-print today
-	
-path = r"C://LIGHTING//" + input + "_" + today+ ".mel"
-if os.path.isfile(path):
-	print path
