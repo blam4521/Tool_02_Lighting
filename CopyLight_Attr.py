@@ -14,41 +14,56 @@ def ColorForAllSelectedLights(allSelLights):
 	pointList = []
 	platformRamps = []
 	
-	print com
-
-	for j in allSelLights:
-	    obj2 = j.rpartition(':')[2]
-	    comment = """\n%s\tRamp colour and position values for:\t%s\n"""%(com,obj2)
-	    print comment
-	    #platformRamps.append(comment)
-	    point = cmds.getAttr(j+'.colorEntryList', multiIndices=1)
-	    # print 'THIS IS POINT',point
-	    file.write(os.linesep)    
-	    file.write(comment)
-	    file.write(os.linesep)
-	    file.write(os.linesep)
-	    for p in point:
-	        # print 'THIS IS DANCEPLATRAMPS ---------------',j
-	        p = str(p)
-	        colList = cmds.getAttr(j+'.colorEntryList['+p+'].color')
-	        posList = cmds.getAttr(j+'.colorEntryList['+p+'].position')
-	        cnum = list(colList)
-	        pval = posList
-	        #   print 'CNUM',cnum
-	        #   print 'PVAL',pval
-	        for c in cnum:
-	            colPos =  """setAttr "%s.colorEntryList[%s].position" %f;"""%(obj2,p,pval)
-	            colCol =  """setAttr "%s.colorEntryList[%s].color" -type double3 %f %f %f ;"""%(obj2,p,c[0],c[1],c[2]) 
-	            platformRamps.append(colPos)
-	            platformRamps.append(colCol)
-
-	        for d in platformRamps:
-				print d
-				file.write(d)
-				file.write(os.linesep)
-				#platformRamps = []
-
-	file.close()
+	for Lights in allSelLights:
+	    for j in allSelLights:
+	        obj2 = j.rpartition(':')[2]
+    	    comment = """\n%s\tRamp colour and position values for:\t%s\n"""%(com,obj2)
+    	    print comment
+    	    #platformRamps.append(comment)
+    	    
+    	    # print 'THIS IS POINT',point
+            #file.write(os.linesep)    
+    	    #file.write(comment)
+    	    #file.write(os.linesep)
+    	    #file.write(os.linesep)
+        sel = cmds.select(i, tgl=True)
+        LightSel = """select -tgl %s;"""%(obj2)
+        print LightSel
+        #file.write(LightSel)
+        
+        print 'currLight: ', obj2 
+        currShapes = cmds.listRelatives(j, c=True, s=True)
+        for currLightShape in currShapes:
+            print '\tcurrLightShape: ',currLightShape
+            colList = cmds.getAttr(currLightShape + '.color')[0]
+            colorList.append(currLightShape)
+            print colList
+        print colorList
+        
+        ''' 
+        point = cmds.getAttr(j+'.colorEntryList', multiIndices=1)   
+    	    for p in point:
+    	        
+    	        p = str(p)
+    	        colList = cmds.getAttr(j+'.colorEntryList['+p+'].color')
+    	        posList = cmds.getAttr(j+'.colorEntryList['+p+'].position')
+    	        cnum = list(colList)
+    	        pval = posList
+    	        #   print 'CNUM',cnum
+    	        #   print 'PVAL',pval
+    	        for c in cnum:
+    	            colPos =  """setAttr "%s.colorEntryList[%s].position" %f;"""%(obj2,p,pval)
+    	            colCol =  """setAttr "%s.colorEntryList[%s].color" -type double3 %f %f %f ;"""%(obj2,p,c[0],c[1],c[2]) 
+    	            platformRamps.append(colPos)
+    	            platformRamps.append(colCol)
+    
+    	        for d in platformRamps:
+    				print d
+    				file.write(d)
+    				file.write(os.linesep)
+    				#platformRamps = []
+                '''
+        file.close()
 
 
 def CoordinatesForAllSelectedLight(allSelLights, path):
@@ -57,9 +72,7 @@ def CoordinatesForAllSelectedLight(allSelLights, path):
 	shape and transform node
     '''
 	#allSelLights = cmds.ls(sl=True, type='transform')
-	findRamps = cmds.ls(sl=True, typ = 'ramp')
 	areaLightTrans= []
-	Ramps = []
 	SelectionNode = []
 	Lights = []
 	#today = str(date.today()) + "_T" + str(time.strftime("%H-%M-%S"))
