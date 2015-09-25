@@ -53,7 +53,8 @@ def ColorForAllSelectedLights(allSelLights):
 
 def CoordinatesForAllSelectedLight(allSelLights, path):
 	'''
-	Grabs and copies Coordinates and attributes from the light shape and transform node
+	Grabs and copies Coordinates and attributes from the light 
+	shape and transform node
     '''
 	#allSelLights = cmds.ls(sl=True, type='transform')
 	findRamps = cmds.ls(sl=True, typ = 'ramp')
