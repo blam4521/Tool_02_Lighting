@@ -252,9 +252,10 @@ def main():
 				LightRig Options
 
 				[1] - Get Ramp Color 
-				[2] - Get Coordinates and Color
+				[2] - Get Coordinates and Intensity
 				[3] - Get Intensity Curves
-				[4] - Exit
+				[4] - Get Color Values
+				[5] - Exit
 				""")
 		action = raw_input("What would you like to do?(Enter a number) ")
 		
