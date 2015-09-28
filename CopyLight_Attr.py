@@ -6,9 +6,11 @@ import itertools
 import time
 from datetime import date
 
-def ColorForAllSelectedLights(allSelLights, path):
+def RampForAllSelectedLights(allSelLights, path):
+	
 	'''
-	copies the color slot if the color slot does not have a ramp
+	copies the color slot if the color slot has a ramp
+	
 	'''
 	colorList = []
 	pointList = []
@@ -16,65 +18,60 @@ def ColorForAllSelectedLights(allSelLights, path):
 	
 	file = open(path, 'wb')
 	
-<<<<<<< HEAD
-	for Lights in allSelLights:
-	    for j in allSelLights:
-	        obj2 = j.rpartition(':')[2]
-    	    comment = """\n%s\tRamp colour and position values for:\t%s\n"""%(com,obj2)
-    	    print comment
-    	    #platformRamps.append(comment)
-    	    
-    	    # print 'THIS IS POINT',point
-            #file.write(os.linesep)    
-    	    #file.write(comment)
-    	    #file.write(os.linesep)
-    	    #file.write(os.linesep)
-        sel = cmds.select(i, tgl=True)
-        LightSel = """select -tgl %s;"""%(obj2)
-        print LightSel
-        #file.write(LightSel)
-        
-        print 'currLight: ', obj2 
-        currShapes = cmds.listRelatives(j, c=True, s=True)
-        for currLightShape in currShapes:
-            print '\tcurrLightShape: ',currLightShape
-            colList = cmds.getAttr(currLightShape + '.color')[0]
-            colorList.append(currLightShape)
-            print colList
-        print colorList
-        
-        ''' 
-        point = cmds.getAttr(j+'.colorEntryList', multiIndices=1)   
-    	    for p in point:
-    	        
-    	        p = str(p)
-    	        colList = cmds.getAttr(j+'.colorEntryList['+p+'].color')
-    	        posList = cmds.getAttr(j+'.colorEntryList['+p+'].position')
-    	        cnum = list(colList)
-    	        pval = posList
-    	        #   print 'CNUM',cnum
-    	        #   print 'PVAL',pval
-    	        for c in cnum:
-    	            colPos =  """setAttr "%s.colorEntryList[%s].position" %f;"""%(obj2,p,pval)
-    	            colCol =  """setAttr "%s.colorEntryList[%s].color" -type double3 %f %f %f ;"""%(obj2,p,c[0],c[1],c[2]) 
-    	            platformRamps.append(colPos)
-    	            platformRamps.append(colCol)
-    
-    	        for d in platformRamps:
-    				print d
-    				file.write(d)
-    				file.write(os.linesep)
-    				#platformRamps = []
-                '''
-        file.close()
+	for j in allSelLights:
+		obj2 = j.rpartition(':')[2]
+		comment = """\n%s\tRamp colour and position values for:\t%s\n"""%(com,obj2)
+		print comment
+		Ramps.append(comment)
+		
+		#file.write(os.linesep)    
+		#file.write(comment)
+		#file.write(os.linesep)
+		#file.write(os.linesep)
+	sel = cmds.select(i, tgl=True)
+	LightSel = """select -tgl %s;"""%(obj2)
+	print LightSel
+	#file.write(LightSel)
+	
+	print 'currLight: ', obj2 
+	currShapes = cmds.listRelatives(j, c=True, s=True)
+	for currLightShape in currShapes:
+		print '\tcurrLightShape: ',currLightShape
+        point = cmds.getAttr(j+'.colorEntryList', multiIndices=1)
+        for p in point:
+			p = str(p)
+			colList = cmds.getAttr(j+'.colorEntryList['+p+'].color')
+			posList = cmds.getAttr(j+'.colorEntryList['+p+'].position')
+			cnum = list(colList)
+			pval = posList
+			#   print 'CNUM',cnum
+			#   print 'PVAL',pval
+			for c in cnum:
+				colPos =  """setAttr "%s.colorEntryList[%s].position" %f;"""%(obj2,p,pval)
+				colCol =  """setAttr "%s.colorEntryList[%s].color" -type double3 %f %f %f ;"""%(obj2,p,c[0],c[1],c[2]) 
+				platformRamps.append(colPos)
+				platformRamps.append(colCol)
+
+			for d in platformRamps:
+				print d
+				file.write(d)
+				file.write(os.linesep)
+				platformRamps = []
+			
+	file.close()
 
 
-def CoordinatesForAllSelectedLight(allSelLights, path):
+def ColorsForAllSelectedLight(allSelLights, path):
+	
 	'''
-	Grabs and copies Coordinates and attributes from the light 
-	shape and transform node
-    '''
-=======
+	Grabs and copies Colors from the lights
+	
+	'''
+	colorList = []
+	Ramps = []
+	
+	file = open(path, 'wb')
+
 	for i in allSelLights:
 		obj2 = i.rpartition(':')[2]
 		comment2 =  """\n%s\tINTENSIY values for:\t%s\n"""%(com,obj2)
@@ -112,47 +109,13 @@ def CoordinatesForAllSelectedLight(allSelLights, path):
 			Ramps = []
 	file.close()                		
 
-
-'''
-	for j in allSelLights:
-		obj2 = j.rpartition(':')[2]
-		comment = """\n%s\tRamp colour and position values for:\t%s\n"""%(com,obj2)
-		print comment
-		#Ramps.append(comment)
-		point = cmds.getAttr(j+'.colorEntryList', multiIndices=1)
-		# print 'THIS IS POINT',point
-		file.write(os.linesep)    
-		file.write(comment)
-		file.write(os.linesep)
-		file.write(os.linesep)
-		for p in point:
-			# print 'THIS IS RAMPS ---------------',j
-			p = str(p)
-			colList = cmds.getAttr(j+'.colorEntryList['+p+'].color')
-			posList = cmds.getAttr(j+'.colorEntryList['+p+'].position')
-			cnum = list(colList)
-			pval = posList
-			#   print 'CNUM',cnum
-			#   print 'PVAL',pval
-			for c in cnum:
-				colPos =  """setAttr "%s.colorEntryList[%s].position" %f;"""%(obj2,p,pval)
-				colCol =  """setAttr "%s.colorEntryList[%s].color" -type double3 %f %f %f ;"""%(obj2,p,c[0],c[1],c[2]) 
-				platformRamps.append(colPos)
-				platformRamps.append(colCol)
-
-			for d in Ramps:
-				print d
-				file.write(d)
-				file.write(os.linesep)
-				Ramps = []
-'''
-		
-
 def CoordinatesForAllSelectedLight(allSelLights, path):
+	
 	'''
 	Grabs and copies Coordinates and attributes from the light shape and transform node
+	
 	'''
->>>>>>> New_Ramp_Function
+
 	#allSelLights = cmds.ls(sl=True, type='transform')
 	areaLightTrans= []
 	SelectionNode = []
@@ -232,9 +195,10 @@ def CoordinatesForAllSelectedLight(allSelLights, path):
 
 
 def IntensityCurvesForSelectedLights(allSelLights, path):    
-	#allSelLights = cmds.ls(sl=True)
+	
 	'''
 	Findes and copies the intensity curves of the spotLight
+	
 	'''
 
 
@@ -288,7 +252,7 @@ def IntensityCurvesForSelectedLights(allSelLights, path):
 						file.write(all)                     
 						file.write(os.linesep)
 						   
-					 file.close()
+	file.close()
 					 
 
 def main():
@@ -318,13 +282,15 @@ def main():
 		action = raw_input("What would you like to do?(Enter a number) ")
 		
 		if action == '1':
-			ColorForAllSelectedLights(allSelLights, path)
+			RampForAllSelectedLights(allSelLights, path)
 		elif action == '2':
 			CoordinatesForAllSelectedLight(allSelLights, path)
 		elif action == '3':
 			IntensityCurvesForSelectedLights(allSelLights, path)
 		elif action == '4':
-			exit()
+			action == ColorsForAllSelectedLight(allSelLights, path)
+		elif action == '5':
+			exit();
 		else:
 			print('No valid choice was given, try again')   
 	else:
