@@ -15,6 +15,7 @@ def RampForAllSelectedLights(allSelLights, path):
 	colorList = []
 	pointList = []
 	Ramps = []
+	com = '//'
 	
 	file = open(path, 'wb')
 	
@@ -28,38 +29,46 @@ def RampForAllSelectedLights(allSelLights, path):
 		#file.write(comment)
 		#file.write(os.linesep)
 		#file.write(os.linesep)
-	sel = cmds.select(i, tgl=True)
-	LightSel = """select -tgl %s;"""%(obj2)
-	print LightSel
-	#file.write(LightSel)
+		sel = cmds.select(j, tgl=True)
+		LightSel = """select -tgl %s;"""%(obj2)
+		print LightSel
+		#file.write(LightSel)
 	
-	print 'currLight: ', obj2 
-	currShapes = cmds.listRelatives(j, c=True, s=True)
-	for currLightShape in currShapes:
-		print '\tcurrLightShape: ',currLightShape
-        point = cmds.getAttr(j+'.colorEntryList', multiIndices=1)
-        for p in point:
-			p = str(p)
-			colList = cmds.getAttr(j+'.colorEntryList['+p+'].color')
-			posList = cmds.getAttr(j+'.colorEntryList['+p+'].position')
-			cnum = list(colList)
-			pval = posList
-			#   print 'CNUM',cnum
-			#   print 'PVAL',pval
-			for c in cnum:
-				colPos =  """setAttr "%s.colorEntryList[%s].position" %f;"""%(obj2,p,pval)
-				colCol =  """setAttr "%s.colorEntryList[%s].color" -type double3 %f %f %f ;"""%(obj2,p,c[0],c[1],c[2]) 
-				platformRamps.append(colPos)
-				platformRamps.append(colCol)
+		currShapes = cmds.listRelatives(obj2, c=True, s=True)
+		print 'currShapes:', currShapes
+		c = [str(item) for item in currShapes] 
+		print "c: ", c
+		for currLightShape in c:
+			#point = cmds.getAttr(items2+'.colorEntryList', multiIndices=1)
+			currColor = cmds.listConnections(currLightShape, c=True, s=True, type = 'ramp')
+			if currColor != None:
+				point = cmds.getAttr(currColor+'.colorEntryList', multiIndices=1)
+				print point
+				colorList.append(point)
+			print colorList		
+'''
+			for p in currColor:
+				p = str(p)
+				colList = cmds.getAttr(currColor+'.colorEntryList['+p+'].color')
+				posList = cmds.getAttr(currColor+'.colorEntryList['+p+'].position')
+				cnum = list(colList)
+				pval = posList
+				#   print 'CNUM',cnum
+				#   print 'PVAL',pval
+				for c in cnum:
+					colPos =  """setAttr "%s.colorEntryList[%s].position" %f;"""%(items2,p,pval)
+					colCol =  """setAttr "%s.colorEntryList[%s].color" -type double3 %f %f %f ;"""%(items2,p,c[0],c[1],c[2]) 
+					Ramps.append(colPos)
+					Ramps.append(colCol)
 
-			for d in platformRamps:
-				print d
-				file.write(d)
-				file.write(os.linesep)
-				platformRamps = []
-			
+				for d in Ramps:
+					print d
+					file.write(d)
+					file.write(os.linesep)
+					Ramps = []
+	
 	file.close()
-
+'''
 
 def ColorsForAllSelectedLight(allSelLights, path):
 	
