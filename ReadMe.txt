@@ -18,3 +18,8 @@ Also the script works with maya files that have name spaces in the light objects
 Known Bugs
 
 First function does not work at th moment and needs to be rewritten to have the option of detecting color with no ramp and with a ramp
+
+Update #1
+Function created for capturing the color attributes of is working.
+
+ 

@@ -22,30 +22,36 @@ def RampForAllSelectedLights(allSelLights, path):
 	file = open(path, 'wb')
 	
 	for j in allSelLights:
-		obj2 = j.rpartition(':')[2]
-		comment = """\n%s\tRamp colour and position values for:\t%s\n"""%(com,obj2)
-		print comment
-		Ramps.append(comment)
+		#obj2 = j.rpartition(':')[2]
+		#comment = """\n%s\tRamp colour and position values for:\t%s\n"""%(com,obj2)
+		#print comment
+		#Ramps.append(comment)
+		print j
 		
 		#file.write(os.linesep)    
 		#file.write(comment)
 		#file.write(os.linesep)
 		#file.write(os.linesep)
 		sel = cmds.select(j, tgl=True)
-		LightSel = """select -tgl %s;"""%(obj2)
+		LightSel = """select -tgl %s;"""%(j)
 		print LightSel
 		#file.write(LightSel)
 	
-		currShapes = cmds.listRelatives(obj2, c=True, s=True)
+		currShapes = cmds.listRelatives(j, c=True, s=True)
 		
 		# Looping through all the shapes of the current light
 		for a in currShapes:
 			print 'currShapes:', a
-			currColor = cmds.listConnections(a, type="ramp")
-			point = cmds.getAttr(currColor+'.colorEntryList', multiIndices=1)
+			currColor = cmds.listConnections(a, type='ramp')
+			
+			
+			
+			#point = cmds.getAttr(c+'.colorEntryList', multiIndices=1)
+			
 			#currColor = cmds.listConnections(currShapes, c=True, s=True, type="ramp")
 			#currColor = cmds.getAttr(currLightShape+".color" ,type=True)
-			print "ramp is:", point
+			
+			#print 'ramp is: ', point
 			#colorList.append(point)
         #print colorList
 			
