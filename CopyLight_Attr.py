@@ -17,6 +17,8 @@ def RampForAllSelectedLights(allSelLights, path):
 	Ramps = []
 	com = '//'
 	
+	
+	
 	file = open(path, 'wb')
 	
 	for j in allSelLights:
@@ -35,17 +37,26 @@ def RampForAllSelectedLights(allSelLights, path):
 		#file.write(LightSel)
 	
 		currShapes = cmds.listRelatives(obj2, c=True, s=True)
-		print 'currShapes:', currShapes
-		c = [str(item) for item in currShapes] 
-		print "c: ", c
-		for currLightShape in c:
-			#point = cmds.getAttr(items2+'.colorEntryList', multiIndices=1)
-			currColor = cmds.listConnections(currLightShape, c=True, s=True, type = 'ramp')
+		
+		# Looping through all the shapes of the current light
+		for a in currShapes:
+			print 'currShapes:', a
+			currColor = cmds.listConnections(a, type="ramp")
+			point = cmds.getAttr(currColor+'.colorEntryList', multiIndices=1)
+			#currColor = cmds.listConnections(currShapes, c=True, s=True, type="ramp")
+			#currColor = cmds.getAttr(currLightShape+".color" ,type=True)
+			print "ramp is:", point
+			#colorList.append(point)
+        #print colorList
+			
+'''			
 			if currColor != None:
 				point = cmds.getAttr(currColor+'.colorEntryList', multiIndices=1)
 				print point
 				colorList.append(point)
 			print colorList		
+'''
+
 '''
 			for p in currColor:
 				p = str(p)
