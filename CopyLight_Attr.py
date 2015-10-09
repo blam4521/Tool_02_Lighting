@@ -49,32 +49,34 @@ def RampForAllSelectedLights(allSelLights, path):
 	
 		
 		for i in Ramps:
-		    
-		    point = cmds.getAttr(i+'.colorEntryList', multiIndices=1)
-		    print "point: ", point
-		    for p in point: 
-			    p=str(p)
-			    
-			    colList = cmds.getAttr(i+'.colorEntryList['+p+'].color')
-			    posList = cmds.getAttr(i+'.colorEntryList['+p+'].position')
-			    cnum = list(colList)
-			    print "colList: ", cnum
-			    pval = posList
-			    print "posList: ", posList
-			    
-			    for c in cnum:
+			
+			point = cmds.getAttr(i+'.colorEntryList', multiIndices=1)
+			print "point: ", point
+			for p in point: 
+				p=str(p)
+				
+				colList = cmds.getAttr(i+'.colorEntryList['+p+'].color')
+				posList = cmds.getAttr(i+'.colorEntryList['+p+'].position')
+				cnum = list(colList)
+				print "colList: ", cnum
+				pval = posList
+				print "posList: ", posList
+				
+				for c in cnum:
 					colPos =  """setAttr "%s.colorEntryList[%s].position" %f;"""%(i,p,pval)
 					colCol =  """setAttr "%s.colorEntryList[%s].color" -type double3 %f %f %f ;"""%(i,p,c[0],c[1],c[2]) 
 					colorList.append(colPos)
 					colorList.append(colCol)
-        print colorList			    
+		print 'colorList: ', colorList			    
+
+		for d in colorList:
+			print d
+			file.write(d)
+			file.write(os.linesep)
+			Ramps = []
+	file.close()
 '''			
-		
-				
-
-
-
-			for p in currColor:
+		for p in currColor:
 				p = str(p)
 				colList = cmds.getAttr(currColor+'.colorEntryList['+p+'].color')
 				posList = cmds.getAttr(currColor+'.colorEntryList['+p+'].position')
@@ -88,13 +90,7 @@ def RampForAllSelectedLights(allSelLights, path):
 					Ramps.append(colPos)
 					Ramps.append(colCol)
 
-				for d in Ramps:
-					print d
-					file.write(d)
-					file.write(os.linesep)
-					Ramps = []
-	
-	file.close()
+				
 '''
 
 def ColorsForAllSelectedLight(allSelLights, path):
