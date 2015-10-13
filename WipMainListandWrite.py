@@ -16,20 +16,16 @@ def MainListAndWrite(arg):
 
 	'''
 	Grabs all the attributes from lights with namespaces.
-	1 has the option to remove namespaces or leave them
-	2 writes the list to a json file. 
+	writes the list to a json file. 
 	'''
 	
-	#
+	#writing json format
 	for i in arg:
-	    print "values are: ", i
-	
-	
-	json(
-	
-	
-	with io.open('C:\DA3_WORKSPACE\LIGHTING\data.txt', 'w', encoding='utf-8') as f:
-		    f.write(unicode(json.dumps(i, ensure_ascii=False)))
+	    #print "values are: ", i
+	    jsonValues = json.dumps(i)
+	    print "json format: ", jsonValues
+	    with io.open('C:\DA3_WORKSPACE\LIGHTING\data.txt', 'w', encoding='utf-8') as f:
+	        f.write(unicode(json.dumps(jsonValues, ensure_ascii=False)))
 	
 		
 
