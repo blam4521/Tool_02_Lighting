@@ -42,26 +42,14 @@ def RampForAllSelectedLights(allSelLights):
 	Ramps = []
 	com = '//'
 	
-	
-	
-	#file = open(path, 'wb')
-	
 	for j in allSelLights:
-		#obj2 = j.rpartition(':')[2]
-		#comment = """\n%s\tRamp colour and position values for:\t%s\n"""%(com,obj2)
-		#print comment
-		#Ramps.append(comment)
+		
 		print j
 		
-		#file.write(os.linesep)    
-		#file.write(comment)
-		#file.write(os.linesep)
-		#file.write(os.linesep)
 		sel = cmds.select(j, tgl=True)
 		LightSel = """select -tgl %s;"""%(j)
 		print LightSel
-		#file.write(LightSel)
-	
+			
 		currShapes = cmds.listRelatives(j, c=True, s=True)
 		currColor = cmds.listConnections(currShapes, type='ramp')
 		#print currColor
@@ -95,10 +83,8 @@ def RampForAllSelectedLights(allSelLights):
 
 		for d in colorList:
 			print d
-			#file.write(d)
-			#file.write(os.linesep)
 		return colorList	
-	#file.close()
+	
 	
 
 MainListAndWrite(RampForAllSelectedLights(allSelLights));
