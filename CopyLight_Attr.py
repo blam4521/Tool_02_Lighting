@@ -223,7 +223,7 @@ def CoordinatesForAllSelectedLight(allSelLights, path):
 			file.write(a)
 			file.write(os.linesep)
 			
-		file.close()
+	file.close()
 
 
 def IntensityCurvesForSelectedLights(allSelLights, path):    

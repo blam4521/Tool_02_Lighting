@@ -1,6 +1,6 @@
 //Maya ASCII 2015 scene
 //Name: lightTest_v01.ma
-//Last modified: Fri, Oct 09, 2015 04:32:09 PM
+//Last modified: Tue, Oct 13, 2015 12:05:21 PM
 //Codeset: 1252
 requires maya "2015";
 currentUnit -l centimeter -a degree -t film;
