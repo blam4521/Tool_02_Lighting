@@ -26,6 +26,7 @@ def MainListAndWrite(arg):
 	    print "json format: ", jsonValues
 	    with io.open('C:\DA3_WORKSPACE\LIGHTING\data.txt', 'w', encoding='utf-8') as f:
 	        f.write(unicode(json.dumps(jsonValues, ensure_ascii=False)))
+        f.close()
 	
 		
 
@@ -99,5 +100,5 @@ def RampForAllSelectedLights(allSelLights):
 		return colorList	
 	#file.close()
 	
-myRamp = RampForAllSelectedLights(allSelLights);
-MainListAndWrite(myRamp);
+
+MainListAndWrite(RampForAllSelectedLights(allSelLights));

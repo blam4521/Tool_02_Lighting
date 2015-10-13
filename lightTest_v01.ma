@@ -1,6 +1,6 @@
 //Maya ASCII 2015 scene
 //Name: lightTest_v01.ma
-//Last modified: Tue, Oct 13, 2015 12:05:21 PM
+//Last modified: Tue, Oct 13, 2015 02:15:23 PM
 //Codeset: 1252
 requires maya "2015";
 currentUnit -l centimeter -a degree -t film;
@@ -11,8 +11,8 @@ fileInfo "cutIdentifier" "201503261530-955654";
 fileInfo "osv" "Microsoft Windows 7 Business Edition, 64-bit Windows 7 Service Pack 1 (Build 7601)\n";
 createNode transform -s -n "persp";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" 58.415288785219779 13.970652446232879 27.917884506688491 ;
-	setAttr ".r" -type "double3" -15.520687610044881 64.999999999999332 0 ;
+	setAttr ".t" -type "double3" 46.482265962571489 37.881922213198592 15.416775984948554 ;
+	setAttr ".r" -type "double3" -31.720687610046145 64.999999999999531 3.7629167612909659e-015 ;
 createNode camera -s -n "perspShape" -p "persp";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999986;
@@ -79,9 +79,9 @@ createNode areaLight -n "lightTest_v01:areaLightShape1" -p "lightTest_v01:areaLi
 	setAttr ".urs" no;
 	setAttr ".rdl" 1;
 createNode transform -n "lightTest_v01:areaLight2";
-	setAttr ".t" -type "double3" 0.099191755984414043 1.8797307879970369 -6.0972311927273415 ;
+	setAttr ".t" -type "double3" 9.733879561537357 13.846933775738631 -9.3780957730448424 ;
 	setAttr ".r" -type "double3" -5.2630191725628581 -65.624677197861288 -15.825061773800165 ;
-	setAttr ".s" -type "double3" 4.6650763879219381 4.6650763879219381 4.6650763879219381 ;
+	setAttr ".s" -type "double3" 14.314788541819112 14.314788541819112 14.314788541819112 ;
 createNode areaLight -n "lightTest_v01:areaLightShape2" -p "lightTest_v01:areaLight2";
 	setAttr -k off ".v";
 	setAttr ".in" 3.0075187683105469;
@@ -142,6 +142,8 @@ createNode lightLinker -s -n "lightLinker1";
 	setAttr -s 2 ".lnk";
 	setAttr -s 2 ".slnk";
 createNode displayLayerManager -n "layerManager";
+	setAttr ".dli[1]"  1;
+	setAttr -s 2 ".dli";
 createNode displayLayer -n "defaultLayer";
 createNode renderLayerManager -n "renderLayerManager";
 createNode renderLayer -n "defaultRenderLayer";
@@ -263,6 +265,9 @@ createNode ramp -n "ramp3";
 	setAttr ".cel[2].ep" 0.38943895697593689;
 	setAttr ".cel[2].ec" -type "float3" 0 1 1 ;
 createNode place2dTexture -n "place2dTexture3";
+createNode displayLayer -n "layer1";
+	setAttr ".v" no;
+	setAttr ".do" 1;
 select -ne :time1;
 	setAttr ".o" 1;
 	setAttr ".unw" 1;
@@ -299,8 +304,16 @@ select -ne :hardwareRenderingGlobals;
 	setAttr ".vac" 2;
 select -ne :defaultHardwareRenderGlobals;
 	setAttr ".res" -type "string" "ntsc_4d 646 485 1.333";
+connectAttr "layer1.di" "lightTest_v01:ambientLight1.do";
+connectAttr "layer1.di" "lightTest_v01:areaLight1.do";
 connectAttr "lightTest_v01:ramp2.oc" "lightTest_v01:areaLightShape2.cl";
+connectAttr "layer1.di" "lightTest_v01:areaLight3.do";
+connectAttr "layer1.di" "lightTest_v01:spotLight1.do";
+connectAttr "layer1.di" "lightTest_v01:spotLight2.do";
 connectAttr "lightTest_v01:IntensityCurve.o" "lightTest_v01:spotLightShape2.in";
+connectAttr "layer1.di" "areaLight2.do";
+connectAttr "layer1.di" "areaLight3.do";
+connectAttr "layer1.di" "areaLight4.do";
 connectAttr "ramp3.oc" "areaLightShape4.cl";
 relationship "link" ":lightLinker1" ":initialShadingGroup.message" ":defaultLightSet.message";
 relationship "link" ":lightLinker1" ":initialParticleSE.message" ":defaultLightSet.message";
@@ -320,6 +333,7 @@ connectAttr "place2dTexture2.o" "ramp2.uv";
 connectAttr "place2dTexture2.ofs" "ramp2.fs";
 connectAttr "place2dTexture3.o" "ramp3.uv";
 connectAttr "place2dTexture3.ofs" "ramp3.fs";
+connectAttr "layerManager.dli[1]" "layer1.id";
 connectAttr "lightTest_v01:place2dTexture1.msg" ":defaultRenderUtilityList1.u" -na
 		;
 connectAttr "lightTest_v01:place2dTexture2.msg" ":defaultRenderUtilityList1.u" -na
