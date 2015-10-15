@@ -1,6 +1,6 @@
 //Maya ASCII 2015 scene
 //Name: lightTest_v01.ma
-//Last modified: Tue, Oct 13, 2015 02:15:23 PM
+//Last modified: Thu, Oct 15, 2015 01:43:31 PM
 //Codeset: 1252
 requires maya "2015";
 currentUnit -l centimeter -a degree -t film;
@@ -11,12 +11,12 @@ fileInfo "cutIdentifier" "201503261530-955654";
 fileInfo "osv" "Microsoft Windows 7 Business Edition, 64-bit Windows 7 Service Pack 1 (Build 7601)\n";
 createNode transform -s -n "persp";
 	setAttr ".v" no;
-	setAttr ".t" -type "double3" 46.482265962571489 37.881922213198592 15.416775984948554 ;
-	setAttr ".r" -type "double3" -31.720687610046145 64.999999999999531 3.7629167612909659e-015 ;
+	setAttr ".t" -type "double3" 87.074884765343242 56.379820836219004 2.4808165083682354 ;
+	setAttr ".r" -type "double3" -29.920687610040467 83.799999999999699 -2.9449756071887301e-014 ;
 createNode camera -s -n "perspShape" -p "persp";
 	setAttr -k off ".v" no;
 	setAttr ".fl" 34.999999999999986;
-	setAttr ".coi" 62.906359550839611;
+	setAttr ".coi" 103.39345624817577;
 	setAttr ".imn" -type "string" "persp";
 	setAttr ".den" -type "string" "persp_depth";
 	setAttr ".man" -type "string" "persp_mask";
@@ -79,9 +79,9 @@ createNode areaLight -n "lightTest_v01:areaLightShape1" -p "lightTest_v01:areaLi
 	setAttr ".urs" no;
 	setAttr ".rdl" 1;
 createNode transform -n "lightTest_v01:areaLight2";
-	setAttr ".t" -type "double3" 9.733879561537357 13.846933775738631 -9.3780957730448424 ;
-	setAttr ".r" -type "double3" -5.2630191725628581 -65.624677197861288 -15.825061773800165 ;
-	setAttr ".s" -type "double3" 14.314788541819112 14.314788541819112 14.314788541819112 ;
+	setAttr ".t" -type "double3" 9.577397756210182 16.802643611903829 -23.688018003808061 ;
+	setAttr ".r" -type "double3" 23.947436701582177 -76.862740062032202 0.64257704267513827 ;
+	setAttr ".s" -type "double3" 11.815654852476763 11.815654852476763 11.815654852476763 ;
 createNode areaLight -n "lightTest_v01:areaLightShape2" -p "lightTest_v01:areaLight2";
 	setAttr -k off ".v";
 	setAttr ".in" 3.0075187683105469;
@@ -266,7 +266,6 @@ createNode ramp -n "ramp3";
 	setAttr ".cel[2].ec" -type "float3" 0 1 1 ;
 createNode place2dTexture -n "place2dTexture3";
 createNode displayLayer -n "layer1";
-	setAttr ".v" no;
 	setAttr ".do" 1;
 select -ne :time1;
 	setAttr ".o" 1;
