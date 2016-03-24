@@ -15,7 +15,7 @@ allSelLights = cmds.ls(sl=True)
 today = str(date.today()) + "_T" + str(time.strftime("%H-%M-%S"))
 
 
-def MainListAndWrite(args):
+def MainListAndWrite(*args):
 
 	'''
 	Grabs all the attributes from lights with namespaces.
@@ -44,7 +44,7 @@ def MainListAndWrite(args):
 	#with open(filename, 'w') as f:
 	#	f.write(dumps(i), f, indent=4)
 	
-	
+MainListAndWrite(allSelLights);
 		
 
 
@@ -103,4 +103,4 @@ def RampForAllSelectedLights(allSelLights):
 		return colorList	
 	
 
-MainListAndWrite(RampForAllSelectedLights(allSelLights));
+
