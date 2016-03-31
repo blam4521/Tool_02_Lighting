@@ -10,7 +10,9 @@ import pymel.core as pm
 from datetime import date
 from itertools import izip
 
-allSelLights = cmds.ls(sl=True)
+SelLights = cmds.ls(sl=True)
+
+print SelLights
 	
 today = str(date.today()) + "_T" + str(time.strftime("%H-%M-%S"))
 
@@ -24,7 +26,7 @@ def MainListAndWrite(*args):
 	#sel = pm.selected()
 	#print "sel:" , sel
 	
-	myDict = dict((k, allSelLights) for k in args)
+	myDict = dict((k, SelLights) for k in args)
 	print myDict
 	
 	for item in myDict:
@@ -43,8 +45,21 @@ def MainListAndWrite(*args):
 	
 	#with open(filename, 'w') as f:
 	#	f.write(dumps(i), f, indent=4)
-	
-MainListAndWrite(allSelLights);
+	data = {}
+
+for item in pm.selected():
+    subdata = {
+        'translate': list(item.translate.get()),
+        'rotate': list(item.rotate.get()),
+        'scale': list(item.scale.get()),
+    }
+    data[str(item)] = subdata
+
+with open(cmds.workspace(q=True, rd=True)+"data/outfile.json", 'w')as fp:
+    json.dump( data, fp, indent=4)
+    
+
+MainListAndWrite(SelLights);
 		
 
 
