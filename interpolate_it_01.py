@@ -7,11 +7,14 @@ import pymel.core as pm
 import maya.OpenMayaUI as mui
 import shiboken
 
-class InterpolateIt(qg.QDialog):
+import utils.utils as utils
+reload(utils)
+
+class LightIt(qg.QDialog):
     def __init__(self):
         qg.QDialog.__init__(self)
         self.setWindowFlags(qc.Qt.WindowStaysOnTopHint)
-        self.setObjectName('Lighting Tools')
+        self.setObjectName('Lighting Tools v1.04')
         self.setWindowTitle('Lighting Tools v1.04')
         self.setFixedWidth(314)
 
@@ -19,12 +22,18 @@ class InterpolateIt(qg.QDialog):
         self.layout().setContentsMargins(0,0,0,0)
         self.layout().setSpacing(0)
 
+        scroll_area = qg. QScrollArea()
+        scroll_area.setWidgetResizable( True )
+        scroll_area.setFocusPolicy( qc.Qt.NoFocus )
+        scroll_area.setHorizontalScrollBarPolicy( qc.Qt.ScrollBarAlwaysOff )
+        self.layout().addWidget( scroll_area )
+
         main_widget = qg.QWidget()
         main_layout = qg.QVBoxLayout()
         main_layout.setContentsMargins(5,5,5,5)
         main_layout.setAlignment(qc.Qt.AlignTop)
         main_widget.setLayout(main_layout)
-        #scroll_area.setWidget(main_widget)
+        scroll_area.setWidget(main_widget)
 
         self.interp_layout = qg.QVBoxLayout()
         self.interp_layout.setContentsMargins(0,0,0,0)
@@ -37,11 +46,9 @@ class InterpolateIt(qg.QDialog):
         button_layout.setAlignment(qc.Qt.AlignRight)
         main_layout.addLayout(button_layout)
 
-        add_button = qg.QPushButton('New...')
-        button_layout.addWidget(add_button)
-
-        new_widget = InterpolateWidget()
-        #new_widget.hideCloseButton()
+        # Creating Instance of LightWidget()
+        new_widget = LightWidget()
+        
         self.interp_layout.addWidget(new_widget)
 
         self._interp_widget = []
@@ -49,11 +56,23 @@ class InterpolateIt(qg.QDialog):
 
         self._dock_widget = self._dock_name = None
 
-        
-
     #------------------------------------------------------------------------------------------#
 
-class InterpolateWidget(qg.QFrame):
+    def connectDockWidget( self, dock_name, dock_widget ):
+        self._dock_widget = dock_widget
+        self._dock_name = dock_name
+
+    def close( self ):
+        if self._dock_widget:
+            mc.deleteUI( self._dock_name )
+        else:
+            qg.QDialog.close( self )
+        self._dock_widget = self._dock_name = None
+
+#--------------------------------------------------------------------------------------------------#
+
+
+class LightWidget(qg.QFrame):
     def __init__(self, *args, **kwargs):
         qg.QFrame.__init__(self, *args, **kwargs)
         
@@ -75,49 +94,32 @@ class InterpolateWidget(qg.QFrame):
         title_layout = qg.QHBoxLayout()
         select_layout = qg.QHBoxLayout()
         button_layout = qg.QHBoxLayout()
-        slider_layout = qg.QHBoxLayout()
         check_layout  = qg.QHBoxLayout()
         self.main_widget.layout().addLayout( title_layout )
         self.main_widget.layout().addLayout( select_layout )
         self.main_widget.layout().addLayout( button_layout )
-        self.main_widget.layout().addLayout( slider_layout )
-        self.main_widget.layout().addLayout(                      check_layout )
+        self.main_widget.layout().addLayout( check_layout )
 
-        title_line =qg.QLineEdit('Untitled')
+        
         #adds widget to layout
-        title_layout.addWidget(title_line)
-
-        self.close_bttn = qg.QPushButton('X')
+        char_button = qg.QPushButton( 'Char_Constrain' )
+        select_layout.addWidget( char_button )
+        
+        set_button = qg.QPushButton( 'Set_Constrain' )
+        button_layout.addWidget( set_button )
+        
+        createLayer_button = qg.QPushButton( 'Create_Layers' )
+        check_layout.addWidget( createLayer_button )
+        
         #set the height and width of the button
-        self.close_bttn.setFixedHeight( 30 )
-        self.close_bttn.setFixedWidth( 30 )
-
-        select_layout.addSpacerItem(qg.QSpacerItem(5, 5, qg.QSizePolicy.Expanding))
+        #select_layout.addSpacerItem(qg.QSpacerItem(5, 5, qg.QSizePolicy.Expanding))
+        #select_layout.addSpacerItem(qg.QSpacerItem(5, 5, qg.QSizePolicy.Expanding))
+       
         
-        select_layout.addSpacerItem(qg.QSpacerItem(5, 5, qg.QSizePolicy.Expanding))
-
-        button_layout.addWidget(self.store_start_bttn)
-        button_layout.addWidget(self.reset_item_bttn)
-        button_layout.addWidget(self.store_end_bttn)
-
-        self.slider = qg.QSlider()
-        self.slider.setRange(0, 49)
-        self.slider.setOrientation(qc.Qt.Horizontal)
-        
-        slider_layout.addWidget(self.start_lb)
-        slider_layout.addWidget(self.slider)
-        slider_layout.addWidget(self.end_lb)
-
-        self.transforms_chbx = qg.QCheckBox('Transform')
-        self.attributes_chbx = qg.QCheckBox('UD Attributes')
-        self.transforms_chbx.setCheckState(qc.Qt.Checked)
-        check_layout.addWidget(self.transforms_chbx)
-        check_layout.addWidget(self.attributes_chbx)
-
-        self.items = {}
-        self.slider_down = False
-
-        
+        # connect modifers
+        char_button.clicked.connect( utils.charProp )
+        set_button.clicked.connect( utils.setLights )
+        createLayer_button.clicked.connect( utils.createLayer )
 
 #--------------------------------------------------------------------------------------------------#
 
@@ -127,29 +129,30 @@ def create(docked=True):
     global dialog
 
     if dialog is None:
-        dialog = InterpolateIt()
+        dialog = LightIt()
 
     # docking window if statment    
     if docked is True:
         ptr = mui.MQtUtil.mainWindow()
         main_window = shiboken.wrapInstance(long(ptr), qg.QWidget)
 
-        dialog.setParent(main_window)
+        dialog.setParent( main_window )
         size = dialog.size()
-
+        #return proper full name
         name = mui.MQtUtil.fullName(long(shiboken.getCppPointer(dialog)[0]))
         dock = mc.dockControl(
             allowedArea =['right', 'left'],
-            area        = 'right',
-            floating    = False,
+            area        = 'left',
+            floating    = True,
             content     = name,
             width       = size.width(),
             height      = size.height(),
-            label       = 'Interpolate It')
+            label       = 'Lighting Tools v1.04')
 
+        # Convert to Dock widget
         widget      = mui.MQtUtil.findControl(dock)
         dock_widget = shiboken.wrapInstance(long(widget), qc.QObject)
-        #dialog.connectDockWidget(dock, dock_widget)
+        dialog.connectDockWidget( dock, dock_widget )
 
     else:
         dialog.show()
@@ -160,8 +163,3 @@ def delete():
     if dialog:
         dialog.close()
         dialog = None
-
-
-from digital_tutors import interpolate_it_01;
-reload(interpolate_it_01)
-interpolate_it_01.create()
